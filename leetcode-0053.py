@@ -7,16 +7,28 @@ class Solution:
 
         def mx(l=0, r=n):
             m = (l + r) // 2
-            if l == r -1:
+            if l == r - 1:
                 return nums[l]
+            acc1 = 0
+            acc2 = 0
+            max_acc1 = nums[m-1]
+            max_acc2 = nums[m]
+            for i in range(m - 1, l - 1, -1):
+                acc1 += nums[i]
+                if acc1 > max_acc1:
+                    max_acc1 = acc1
+            for i in range(m, r):
+                acc2 += nums[i]
+                if acc2 > max_acc2:
+                    max_acc2 = acc2
             # 计算中间合并的最大子序列和
-            result = 0 # TODO: 未实现
-            
+            result = max_acc1 + max_acc2
             if l < m:
                 result = max(result, mx(l, m))
             if m < r:
                 result = max(result, mx(m, r))
-
+            # print(f'mx({l}, {r}) = {result}')
+            return result
         return mx()
 
     def maxSubArrayAccumulateTLE(self, nums: List[int]) -> int:
