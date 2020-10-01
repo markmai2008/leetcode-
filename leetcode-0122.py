@@ -2,25 +2,14 @@ from typing import List
 
 
 class Solution:
-    def maxProfitTLE(self, prices: List[int]) -> int:
-        y = 0
-        for i, c in enumerate(prices):
-            for d in prices[i + 1:]:
-                if d - c > y:
-                    y = d - c
-        return y
-
     def maxProfit(self, prices: List[int]) -> int:
-        if not prices:
-            return 0
-        y = 0 # 最大利润
-        x = prices[0] # 当天以前的最低价格
-        for c in prices:
-            if c < x:
-                x = c
-            if c - x > y:
-                y = c - x
-        return y
+        n = len(prices)
+        a = 0
+        for i in range(1, n):
+            # if prices[i] - prices[i - 1] > 0:
+            #     a += prices[i] - prices[i - 1]
+            a += max(prices[i]-prices[i-1], 0)
+        return a
 
 
 if __name__ == "__main__":
@@ -28,12 +17,13 @@ if __name__ == "__main__":
     """
 
     cases = [
-        ([7, 1, 5, 3, 6, 4], 5),
+        ([7, 1, 5, 3, 6, 4], 7),
         ([7, 6, 4, 3, 1], 0),
         ([7, 2, 6, 1], 4),
         ([1, 1, 1, 1, 1, 1], 0),
-        (list(range(10000, 0, -1))+[0]*16000+[1, 2, 3], 3),
-        ([], 0)
+        #(list(range(10000, 0, -1))+[0]*16000+[1, 2, 3], 3),
+        ([], 0),
+        ([1,2,3,4,5], 4)
     ]
 
     solution = Solution()
