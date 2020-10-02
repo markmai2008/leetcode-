@@ -12,6 +12,9 @@ class Solution:
                     return True
         return False
 
+    def containsDuplicateSET(self, nums: List[int]) -> bool:
+        return len(set(nums)) < len(nums)
+
     def containsDuplicate(self, nums: List[int]) -> bool:
         lst = sorted(nums)
         n = len(nums)
