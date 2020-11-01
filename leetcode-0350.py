@@ -3,23 +3,23 @@ from typing import List
 
 class Solution:
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        """ 改善了内层循环，忽略了nums2中较小的元素，循环部分可以达到O(m+n) """
+        """ 双指针解法 """
         nums1.sort()
         nums2.sort()
         m = len(nums1)
         n = len(nums2)
-        k = 0
+        i = 0
+        j = 0
         ans = []
-        for i in range(m):
-            for j in range(k, n):
-                if nums1[i] == nums2[j]:
-                    ans.append(nums1[i])
-                    k = j + 1
-                    break
-                elif nums2[j] > nums1[i]:
-                    break
-                else:
-                    k = j + 1
+        while i < m and j < n:
+            if nums1[i] < nums2[j]:
+                i += 1
+            elif nums1[i] > nums2[j]:
+                j += 1
+            elif nums1[i] == nums2[j]:
+                ans.append(nums1[i])
+                i += 1
+                j += 1
         return ans
 
     def intersect1(self, nums1: List[int], nums2: List[int]) -> List[int]:
@@ -56,6 +56,26 @@ class Solution:
                     break
         return ans
 
+    def intersect3(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        """ 改善了内层循环，忽略了nums2中较小的元素，循环部分可以达到O(m+n) """
+        nums1.sort()
+        nums2.sort()
+        m = len(nums1)
+        n = len(nums2)
+        k = 0
+        ans = []
+        for i in range(m):
+            for j in range(k, n):
+                if nums1[i] == nums2[j]:
+                    ans.append(nums1[i])
+                    k = j + 1
+                    break
+                elif nums2[j] > nums1[i]:
+                    break
+                else:
+                    k = j + 1
+        return ans
+
 
 if __name__ == "__main__":
     """测试代码
@@ -68,7 +88,7 @@ if __name__ == "__main__":
           [5, 25, 4, 39, 57, 49, 93, 79, 7, 8, 49, 89, 2, 7, 73, 88, 45, 15, 34, 92, 84, 38, 85, 34, 16, 6, 99, 0, 2, 36, 68, 52, 73, 50, 77, 44, 61, 48]), [5, 4, 57, 79, 7, 89, 88, 45, 34, 92, 38, 85, 6, 0, 77, 44, 61]),
         (([1, 2, 2, 4, 5], [1, 1, 2, 3, 4]), [1, 2, 4]),
         (([9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9], [1, 2, 3, 4, 5, 6, 7, 8]), []),
-        (([9]*100000, [1]*100000), []),
+        # (([9]*100000, [1]*100000), []),
     ]
 
     solution = Solution()
